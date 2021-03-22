@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
@@ -34,7 +35,7 @@ public class Solver {
         return crossProduct > 0;
     }
 
-    public static void convexHull(List<Point> points, Point start) {
+    public static List<Point> convexHull(List<Point> points, Point start) {
         points.remove(start);
 
         Collections.sort(points, (Point p1, Point p2) -> {
@@ -69,8 +70,11 @@ public class Solver {
             stack.add(point);
         }
 
+        List<Point> path = new ArrayList<>();
         while (stack.size() > 0) {
-            System.out.println(stack.pop());
+            path.add(stack.pop());
         }
+
+        return path;
     }
 }
