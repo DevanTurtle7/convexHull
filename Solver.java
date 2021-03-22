@@ -7,10 +7,22 @@ public class Solver {
         int xDiff = Math.abs(to.getX() - from.getX());
         int yDiff = Math.abs(to.getY() - from.getY());
 
-        return 0.0;
+        if (xDiff == 0) {
+            return 90.0;
+        }
+
+        double angle = Math.atan(yDiff / xDiff);
+        angle = Math.toDegrees(angle);
+        if (from.getX() > to.getX()) {
+            angle = 180 - angle;
+        }
+
+        return angle;
     }
 
     public static void convexHull(List<Point> points, Point start) {
+        points.remove(start);
+
         Collections.sort(points, (Point p1, Point p2) -> {
             double a1 = getAngle(start, p1);
             double a2 = getAngle(start, p2);
@@ -23,5 +35,9 @@ public class Solver {
                 return 1;
             }
         });
+
+        for (Point p : points) {
+            System.out.println(p);
+        }
     }
 }
