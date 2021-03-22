@@ -56,8 +56,21 @@ public class Solver {
         points.remove(0);
 
         for (Point point : points) {
-            System.out.println(point);
-            isClockwise(start, points.get(0), point);
+            Point middle = stack.pop();
+            Point from = stack.pop();
+
+            while (!isClockwise(from, middle, point)) {
+                middle = from;
+                from = stack.pop();
+            }
+
+            stack.add(from);
+            stack.add(middle);
+            stack.add(point);
+        }
+
+        while (stack.size() > 0) {
+            System.out.println(stack.pop());
         }
     }
 }
