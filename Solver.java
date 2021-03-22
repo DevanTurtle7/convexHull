@@ -1,5 +1,6 @@
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 public class Solver {
 
@@ -20,6 +21,19 @@ public class Solver {
         return angle;
     }
 
+    private static boolean isClockwise(Point from, Point middle, Point to) {
+        int x1 = from.getX();
+        int x2 = middle.getX();
+        int x3 = to.getX();
+        int y1 = from.getY();
+        int y2 = middle.getY();
+        int y3 = to.getY();
+
+        int crossProduct = ((x2 - x1) * (y3 - y1)) - ((y2 - y1) * (x3 - x1));
+
+        return crossProduct > 0;
+    }
+
     public static void convexHull(List<Point> points, Point start) {
         points.remove(start);
 
@@ -36,8 +50,14 @@ public class Solver {
             }
         });
 
-        for (Point p : points) {
-            System.out.println(p);
+        Stack<Point> stack = new Stack<>();
+        stack.add(start);
+        stack.add(points.get(0));
+        points.remove(0);
+
+        for (Point point : points) {
+            System.out.println(point);
+            isClockwise(start, points.get(0), point);
         }
     }
 }
